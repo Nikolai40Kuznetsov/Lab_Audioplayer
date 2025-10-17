@@ -1,6 +1,14 @@
 body {
     font-size: 30px;
+    background: #1e3c72;
+    color: white;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    text-align: center;
 }
+
 button {
     background: #00693E;
     color: #7DF9FF;
@@ -12,10 +20,88 @@ button {
     margin: 5px;
     display: block;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
+
 button:hover{
     background: #3CAA3C;
-    transform:translate(0,-3px) ;
-    box-shadow: 0 20px 40px 0 rgb(128,0,0);
+    transform: translate(0,-3px);
+    box-shadow: 0 20px 40px 0 rgba(0, 100, 255, 0.5);
     font-size: 30px;
+}
+
+#first-block {
+    text-align: center;
+    margin-bottom: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 20px;
+}
+
+#first-block button {
+    display: inline-block;
+    margin: 10px;
+    background: #228B22;
+}
+
+#first-block button:hover {
+    background: #32CD32;
+    box-shadow: 0 20px 40px 0 rgba(0, 150, 255, 0.7);
+}
+
+#buttons-div {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+#buttons-div button {
+    display: inline-block;
+    margin: 10px;
+    background: #1E90FF;
+}
+
+#buttons-div button:hover {
+    background: #00BFFF;
+    box-shadow: 0 20px 40px 0 rgba(30, 144, 255, 0.5);
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+.track-page {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.track-page img {
+    max-width: 300px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    border: 5px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.track-page p {
+    margin: 10px 0;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#track-1-page, #track-2-page, #track-3-page, #track-4-page, #track-5-page {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin: 20px auto;
+    max-width: 600px;
 }
