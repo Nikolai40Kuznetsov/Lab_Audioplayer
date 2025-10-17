@@ -1,0 +1,21 @@
+body {
+    font-size: 30px;
+}
+button {
+    background: #00693E;
+    color: #7DF9FF;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 30px;
+    font-weight: 500;
+    margin: 5px;
+    display: block;
+    cursor: pointer;
+}
+button:hover{
+    background: #3CAA3C;
+    transform:translate(0,-3px) ;
+    box-shadow: 0 20px 40px 0 rgb(128,0,0);
+    font-size: 30px;
+}
