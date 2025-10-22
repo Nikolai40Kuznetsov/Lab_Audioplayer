@@ -1,137 +1,165 @@
-class Player 
-{
-    constructor(tracks)
-    {
-        this.tracks = tracks        
+class AudioPlayer {
+    constructor(tracksInfo) {
+        this.track_1 = document.getElementById('track-1');
+        this.track_2 = document.getElementById('track-2');
+        this.track_3 = document.getElementById('track-3');
+        this.track_4 = document.getElementById('track-4');
+        this.track_5 = document.getElementById('track-5');
+        this.block_1 = document.getElementById("first-block");
+        this.buttons_div = document.getElementById("buttons-div");
+        this.next_track = document.getElementById("next-track");
+        this.previous_track = document.getElementById("previous-track");
+        this.mix = document.getElementById("mix");
+        this.play_btn = document.querySelector("#buttons-div button:nth-child(1)");
+        this.pause_btn = document.querySelector("#buttons-div button:nth-child(2)");
+        this.volume_slider = document.querySelector("#buttons-div input[type='range']");
+
+        this.tracks_array = [
+            document.getElementById("track-1-page"),
+            document.getElementById("track-2-page"),
+            document.getElementById("track-3-page"),
+            document.getElementById("track-4-page"),
+            document.getElementById("track-5-page")
+        ];
+
+        // Добавляем tracksInfo в свойства класса
+        this.tracksInfo = tracksInfo;
+
+        this.current_page = 0;
+        this.isPlaying = false;
+
+        this.init();
     }
-    div;
-    image_box;
-    forward_button;
-    backward_button;
-    button_pressed_counter = 0;
-    info_button;
-    infoDiv;
 
-    current_page = 0
-    isPlaying = false
+    init() {
+        this.loadTracks();
+        this.setVolume(50);
+        this.volume_slider.value = 50;
+        this.setupEventListeners();
+    }
 
-    loadTracks = function() {
+    loadTracks() {
         this.tracksInfo.forEach((track) => {
-            track.audio.preload = "metadata"
-            track.audio.volume = 0.5
-        })
+            track.audio.preload = "metadata";
+            track.audio.volume = 0.5;
+        });
     }
 
-    showTrack = function(pageNumber) {
+    showTrack(pageNumber) {
         this.tracks_array.forEach(track => {
-            track.style.display = "none"
-        })
-        this.current_page = pageNumber
-        this.tracks_array[this.current_page].style.display = "block"
-        if (isPlaying) {
-            pauseCurrentTrack()
+            track.style.display = "none";
+        });
+        this.current_page = pageNumber;
+        this.tracks_array[this.current_page].style.display = "block";
+        
+        if (this.isPlaying) {
+            this.pauseCurrentTrack();
         }
     }
 
-    go_on_1 = function() {
-        this.block_1.style.display = "none"
-        this.showTrack(0)
-        this.buttons_div.style.display = "block"
+    go_on_1() {
+        this.block_1.style.display = "none";
+        this.showTrack(0);
+        this.buttons_div.style.display = "block";
     }
 
-    go_on_2 = function() {
-        this.block_1.style.display = "none"
-        this.showTrack(1)
-        this.buttons_div.style.display = "block"
+    go_on_2() {
+        this.block_1.style.display = "none";
+        this.showTrack(1);
+        this.buttons_div.style.display = "block";
     }
 
-    go_on_3 = function() {
-        this.block_1.style.display = "none"
-        this.showTrack(2)
-        this.buttons_div.style.display = "block"
+    go_on_3() {
+        this.block_1.style.display = "none";
+        this.showTrack(2);
+        this.buttons_div.style.display = "block";
     }
 
-    go_on_4 = function() {
-        this.block_1.style.display = "none"
-        this.showTrack(3)
-        this.buttons_div.style.display = "block"
+    go_on_4() {
+        this.block_1.style.display = "none";
+        this.showTrack(3);
+        this.buttons_div.style.display = "block";
     }
 
-    go_on_5 = function() {
-        this.block_1.style.display = "none"
-        this.showTrack(4)
-        this.buttons_div.style.display = "block"
+    go_on_5() {
+        this.block_1.style.display = "none";
+        this.showTrack(4);
+        this.buttons_div.style.display = "block";
     }
 
-    go_next = function() {
-        const nextPage = (this.current_page + 1) % this.tracks_array.length
-        showTrack(nextPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+    go_next() {
+        const nextPage = (this.current_page + 1) % this.tracks_array.length;
+        this.showTrack(nextPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     }
 
-    go_back = function() {
-        const prevPage = this.current_page === 0 ? this.tracks_array.length - 1 : this.current_page - 1
-        showTrack(prevPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+    go_back() {
+        const prevPage = this.current_page === 0 ? this.tracks_array.length - 1 : this.current_page - 1;
+        this.showTrack(prevPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     }
 
-    go_mix = function() {
-        let randomPage
+    go_mix() {
+        let randomPage;
         do {
-            randomPage = Math.floor(Math.random() * this.tracks_array.length)
-        } while (randomPage === this.current_page && this.tracks_array.length > 1)
-        showTrack(randomPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+            randomPage = Math.floor(Math.random() * this.tracks_array.length);
+        } while (randomPage === this.current_page && this.tracks_array.length > 1);
+        this.showTrack(randomPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     }
 
-    playCurrentTrack = function() {
-        currentAudio = this.tracksInfo[this.current_page].audio        
+    playCurrentTrack() {
+        const currentAudio = this.tracksInfo[this.current_page].audio;
+        
         this.tracksInfo.forEach(track => {
-            track.audio.pause()
-            track.audio.currentTime = 0
-        })
-        isPlaying = true
+            track.audio.pause();
+            track.audio.currentTime = 0;
+        });
+        
+        currentAudio.play();
+        this.isPlaying = true;
     }
 
-    pauseCurrentTrack = function () {
-        currentAudio = this.tracksInfo[this.current_page].audio
-        currentAudio.pause()
-        isPlaying = false
+    pauseCurrentTrack() {
+        const currentAudio = this.tracksInfo[this.current_page].audio;
+        currentAudio.pause();
+        this.isPlaying = false;
     }
 
-    setVolume = function(value) {
-        const volume = value / 100
+    setVolume(value) {
+        const volume = value / 100;
         this.tracksInfo.forEach(track => {
-            track.audio.volume = volume
-        })
+            track.audio.volume = volume;
+        });
     }
-    init = function() 
-    {
-        this.track_1.addEventListener("click", this.go_on_1.bind(this))
-        this.track_2.addEventListener("click", this.go_on_2.bind(this))
-        this.track_3.addEventListener("click", this.go_on_3.bind(this))
-        this.track_4.addEventListener("click", this.go_on_4.bind(this))
-        this.track_5.addEventListener("click", this.go_on_5.bind(this))
-        this.next_track.addEventListener("click", this.go_next.bind(this))
-        this.previous_track.addEventListener("click", this.go_back.bind(this))
-        this.mix.addEventListener("click", this.go_mix.bind(this))
-        this.play_btn.addEventListener("click", this.playCurrentTrack.bind(this))
-        this.pause_btn.addEventListener("click", this.pauseCurrentTrack.bind(this))
+
+    setupEventListeners() {
+        this.track_1.addEventListener("click", () => this.go_on_1());
+        this.track_2.addEventListener("click", () => this.go_on_2());
+        this.track_3.addEventListener("click", () => this.go_on_3());
+        this.track_4.addEventListener("click", () => this.go_on_4());
+        this.track_5.addEventListener("click", () => this.go_on_5());
+
+        this.next_track.addEventListener("click", () => this.go_next());
+        this.previous_track.addEventListener("click", () => this.go_back());
+        this.mix.addEventListener("click", () => this.go_mix());
+
+        this.play_btn.addEventListener("click", () => this.playCurrentTrack());
+        this.pause_btn.addEventListener("click", () => this.pauseCurrentTrack());
+
         this.volume_slider.addEventListener("input", (e) => {
-            setVolume(e.target.value)
-        })
-        this.loadTracks()
-        this.volume_slider.value = 50
-        this.setVolume(50)
+            this.setVolume(e.target.value);
+        });
     }
 }
-let tracksInfo = [
+
+const tracksInfo = [
     { 
         title: "В лесу родилась ёлочка", 
         description: "Новогодняя песня", 
@@ -157,8 +185,6 @@ let tracksInfo = [
         description: "Из мультфильма 'Крошка Енот'", 
         audio: new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3") 
     }
-]
-let obj1 = new Player(tracksInfo)
-obj1.init()
-let obj2 = new Slider(tracksInfo)
-obj2.init()
+];
+
+const audioPlayer = new AudioPlayer(tracksInfo);

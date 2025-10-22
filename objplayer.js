@@ -1,25 +1,25 @@
 let playerObj = {
-    track_1 : document.getElementById('track-1'),
-    track_2 : document.getElementById('track-2'),
-    track_3 : document.getElementById('track-3'),
-    track_4 : document.getElementById('track-4'),
-    track_5 : document.getElementById('track-5'),
-    block_1 : document.getElementById("first-block"),
-    buttons_div : document.getElementById("buttons-div"),
-    next_track : document.getElementById("next-track"),
-    previous_track : document.getElementById("previous-track"),
-    mix : document.getElementById("mix"),
-    play_btn : document.querySelector("#buttons-div button:nth-child(1)"),
-    pause_btn : document.querySelector("#buttons-div button:nth-child(2)"),
-    volume_slider : document.querySelector("#buttons-div input[type='range']"),
-    tracks_array : [
-        track_1_page = document.getElementById("track-1-page"),
-        track_2_page = document.getElementById("track-2-page"),
-        track_3_page = document.getElementById("track-3-page"),
-        track_4_page = document.getElementById("track-4-page"),
-        track_5_page = document.getElementById("track-5-page")
+    track_1: document.getElementById('track-1'),
+    track_2: document.getElementById('track-2'),
+    track_3: document.getElementById('track-3'),
+    track_4: document.getElementById('track-4'),
+    track_5: document.getElementById('track-5'),
+    block_1: document.getElementById("first-block"),
+    buttons_div: document.getElementById("buttons-div"),
+    next_track: document.getElementById("next-track"),
+    previous_track: document.getElementById("previous-track"),
+    mix: document.getElementById("mix"),
+    play_btn: document.getElementById("play-btn"),
+    pause_btn: document.getElementById("pause-btn"),
+    volume_slider: document.querySelector("#buttons-div input[type='range']"),
+    tracks_array: [
+        document.getElementById("track-1-page"),
+        document.getElementById("track-2-page"),
+        document.getElementById("track-3-page"),
+        document.getElementById("track-4-page"),
+        document.getElementById("track-5-page")
     ],
-    tracksInfo : [
+    tracksInfo: [
         { 
             title: "В лесу родилась ёлочка", 
             description: "Новогодняя песня", 
@@ -46,122 +46,125 @@ let playerObj = {
             audio: new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3") 
         }
     ],
-    current_page : 0,
-    isPlaying : false,
+    current_page: 0,
+    isPlaying: false,
 
-    loadTracks : function() {
+    loadTracks: function() {
         this.tracksInfo.forEach((track) => {
-            track.audio.preload = "metadata"
-            track.audio.volume = 0.5
-        })
+            track.audio.preload = "metadata";
+            track.audio.volume = 0.5;
+        });
     },
 
-    showTrack : function(pageNumber) {
+    showTrack: function(pageNumber) {
         this.tracks_array.forEach(track => {
-            track.style.display = "none"
-        })
-        this.current_page = pageNumber
-        this.tracks_array[this.current_page].style.display = "block"
-        if (isPlaying) {
-            pauseCurrentTrack()
+            track.style.display = "none";
+        });
+        this.current_page = pageNumber;
+        this.tracks_array[this.current_page].style.display = "block";
+        if (this.isPlaying) {
+            this.pauseCurrentTrack();
         }
     },
 
-    go_on_1 : function() {
-        this.block_1.style.display = "none"
-        this.showTrack(0)
-        this.buttons_div.style.display = "block"
+    go_on_1: function() {
+        this.block_1.style.display = "none";
+        this.showTrack(0);
+        this.buttons_div.style.display = "block";
     },
 
-    go_on_2 : function() {
-        this.block_1.style.display = "none"
-        this.showTrack(1)
-        this.buttons_div.style.display = "block"
+    go_on_2: function() {
+        this.block_1.style.display = "none";
+        this.showTrack(1);
+        this.buttons_div.style.display = "block";
     },
 
-    go_on_3 : function() {
-        this.block_1.style.display = "none"
-        this.showTrack(2)
-        this.buttons_div.style.display = "block"
+    go_on_3: function() {
+        this.block_1.style.display = "none";
+        this.showTrack(2);
+        this.buttons_div.style.display = "block";
     },
 
-    go_on_4 : function() {
-        this.block_1.style.display = "none"
-        this.showTrack(3)
-        this.buttons_div.style.display = "block"
+    go_on_4: function() {
+        this.block_1.style.display = "none";
+        this.showTrack(3);
+        this.buttons_div.style.display = "block";
     },
 
-    go_on_5 : function() {
-        this.block_1.style.display = "none"
-        this.showTrack(4)
-        this.buttons_div.style.display = "block"
+    go_on_5: function() {
+        this.block_1.style.display = "none";
+        this.showTrack(4);
+        this.buttons_div.style.display = "block";
     },
 
-    go_next : function() {
-        const nextPage = (this.current_page + 1) % this.tracks_array.length
-        showTrack(nextPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+    go_next: function() {
+        const nextPage = (this.current_page + 1) % this.tracks_array.length;
+        this.showTrack(nextPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     },
 
-    go_back : function() {
-        const prevPage = this.current_page === 0 ? this.tracks_array.length - 1 : this.current_page - 1
-        showTrack(prevPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+    go_back: function() {
+        const prevPage = this.current_page === 0 ? this.tracks_array.length - 1 : this.current_page - 1;
+        this.showTrack(prevPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     },
 
-    go_mix : function() {
-        let randomPage
+    go_mix: function() {
+        let randomPage;
         do {
-            randomPage = Math.floor(Math.random() * this.tracks_array.length)
-        } while (randomPage === this.current_page && this.tracks_array.length > 1)
-        showTrack(randomPage)
-        if (isPlaying) {
-            setTimeout(playCurrentTrack, 100)
+            randomPage = Math.floor(Math.random() * this.tracks_array.length);
+        } while (randomPage === this.current_page && this.tracks_array.length > 1);
+        this.showTrack(randomPage);
+        if (this.isPlaying) {
+            setTimeout(() => this.playCurrentTrack(), 100);
         }
     },
 
-    playCurrentTrack : function() {
-        currentAudio = this.tracksInfo[this.current_page].audio        
+    playCurrentTrack: function() {
+        const currentAudio = this.tracksInfo[this.current_page].audio;
         this.tracksInfo.forEach(track => {
-            track.audio.pause()
-            track.audio.currentTime = 0
-        })
-        isPlaying = true
+            track.audio.pause();
+            track.audio.currentTime = 0;
+        });
+        currentAudio.play();
+        this.isPlaying = true;
     },
 
-    pauseCurrentTrack : function () {
-        currentAudio = this.tracksInfo[this.current_page].audio
-        currentAudio.pause()
-        isPlaying = false
+    pauseCurrentTrack: function() {
+        const currentAudio = this.tracksInfo[this.current_page].audio;
+        currentAudio.pause();
+        this.isPlaying = false;
     },
 
-    setVolume : function(value) {
-        const volume = value / 100
+    setVolume: function(value) {
+        const volume = value / 100;
         this.tracksInfo.forEach(track => {
-            track.audio.volume = volume
-        })
+            track.audio.volume = volume;
+        });
     },
-    init : function() 
-    {
-        this.track_1.addEventListener("click", this.go_on_1.bind(this))
-        this.track_2.addEventListener("click", this.go_on_2.bind(this))
-        this.track_3.addEventListener("click", this.go_on_3.bind(this))
-        this.track_4.addEventListener("click", this.go_on_4.bind(this))
-        this.track_5.addEventListener("click", this.go_on_5.bind(this))
-        this.next_track.addEventListener("click", this.go_next.bind(this))
-        this.previous_track.addEventListener("click", this.go_back.bind(this))
-        this.mix.addEventListener("click", this.go_mix.bind(this))
-        this.play_btn.addEventListener("click", this.playCurrentTrack.bind(this))
-        this.pause_btn.addEventListener("click", this.pauseCurrentTrack.bind(this))
+
+    init: function() {
+        this.track_1.addEventListener("click", this.go_on_1.bind(this));
+        this.track_2.addEventListener("click", this.go_on_2.bind(this));
+        this.track_3.addEventListener("click", this.go_on_3.bind(this));
+        this.track_4.addEventListener("click", this.go_on_4.bind(this));
+        this.track_5.addEventListener("click", this.go_on_5.bind(this));
+        this.next_track.addEventListener("click", this.go_next.bind(this));
+        this.previous_track.addEventListener("click", this.go_back.bind(this));
+        this.mix.addEventListener("click", this.go_mix.bind(this));
+        this.play_btn.addEventListener("click", this.playCurrentTrack.bind(this));
+        this.pause_btn.addEventListener("click", this.pauseCurrentTrack.bind(this));
         this.volume_slider.addEventListener("input", (e) => {
-            setVolume(e.target.value)
-        })
-        this.loadTracks()
-        this.volume_slider.value = 50
-        this.setVolume(50)
+            this.setVolume(e.target.value);
+        });
+        this.loadTracks();
+        this.volume_slider.value = 50;
+        this.setVolume(50);
     }
-}
+};
+
+playerObj.init();
