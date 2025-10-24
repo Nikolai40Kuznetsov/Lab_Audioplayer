@@ -187,4 +187,4 @@ const tracksInfo = [
     }
 ];
 
-const audioPlayer_1 = new AudioPlayer(tracksInfo);
+const audioPlayer = new AudioPlayer(tracksInfo);
